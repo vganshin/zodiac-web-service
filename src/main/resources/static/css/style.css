@@ -1,0 +1,22 @@
+body {
+    color: aliceblue;
+    font-size: 2em;
+    background: url('../images/stars.gif') black;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    text-align: center;
+}
+
+.hot-button {
+    font-weight: bold;
+    color: yellow;
+    background: darkblue;
+}
+
+a {
+    color: aqua;
+}
+
+img {
+    padding: 2em;
+}

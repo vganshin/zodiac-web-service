@@ -1,0 +1,119 @@
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/style.css">
+
+<form name="date_form">
+    <h1>Узнайте, кто вы по знаку зодиака!</h1>
+    <h2>Введите день и месяц вашего рождения:</h2>
+    <!--<input type="date" name="date" id="date" placeholder="1994-09-26"/>-->
+    <select name="day">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+        <option>11</option>
+        <option>12</option>
+        <option>13</option>
+        <option>14</option>
+        <option>15</option>
+        <option>16</option>
+        <option>17</option>
+        <option>18</option>
+        <option>19</option>
+        <option>20</option>
+        <option>21</option>
+        <option>22</option>
+        <option>23</option>
+        <option>24</option>
+        <option>25</option>
+        <option>26</option>
+        <option>27</option>
+        <option>28</option>
+        <option>29</option>
+        <option>30</option>
+        <option>31</option>
+    </select>
+    <select name="month">
+        <option value="1">Января</option>
+        <option value="2">Февраля</option>
+        <option value="3">Марта</option>
+        <option value="4">Апреля</option>
+        <option value="5">Мая</option>
+        <option value="6">Июня</option>
+        <option value="7">Июля</option>
+        <option value="8">Августа</option>
+        <option value="9">Сентября</option>
+        <option value="10">Октября</option>
+        <option value="11">Ноября</option>
+        <option value="12">Декабря</option>
+    </select>
+    <br>
+    <br>
+    <button class="hot-button" type="submit" name="submit">→ УЗНАТЬ ←</button>
+</form>
+
+<script type="text/javascript">
+    function show_zodiac(data) {
+        document.date_form.remove();
+
+        var h1 = document.createElement("h1");
+        h1.innerText = "Вы " + data.name + ". Поздравляем!";
+        img = document.createElement("img");
+        img.src = data.imageUrl;
+        var br = document.createElement("br");
+        var a = document.createElement("a");
+        a.href = "/";
+        a.innerText = "УЗНАТЬ ЕЩЁ РАЗ";
+
+        document.body.appendChild(h1);
+        document.body.appendChild(img);
+        document.body.appendChild(br);
+        document.body.appendChild(a);
+    }
+
+    function show_error(message) {
+        document.date_form.remove();
+        var h1 = document.createElement("h1");
+        h1.innerText = message;
+        var br = document.createElement("br");
+        var a = document.createElement("a");
+        a.href = "/";
+        a.innerText = "ПОПРОБОВАТЬ ЕЩЁ РАЗ";
+
+        document.body.appendChild(h1);
+        document.body.appendChild(br);
+        document.body.appendChild(a);
+    }
+
+    document.date_form.submit.onclick = function (e) {
+        e.preventDefault();
+
+        var day = document.date_form.day.value;
+        var month = document.date_form.month.value;
+
+        fetch("http://localhost:8080/api/zodiac?date=" + day + "." + month)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function(data) {
+                window.data = data;
+
+                if (data != undefined) {
+                    show_zodiac(data);
+                }
+                else {
+                    show_error("Что-то пошло не так.");
+                }
+            })
+            .catch(function () {
+                show_error("Что-то пошло не так.");
+            });
+
+
+    }
+</script>
